@@ -68,6 +68,7 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Base" parent="." instance=ExtResource("3_o2j4u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -2)
+max_health = 50
 
 [node name="EnemyPath" type="Path3D" parent="." node_paths=PackedStringArray("difficulty_manager")]
 curve = SubResource("Curve3D_lvb7b")
@@ -149,3 +150,4 @@ label_settings = SubResource("LabelSettings_epnn3")
 [node name="DifficultyManager" parent="." instance=ExtResource("9_xkmwr")]
 
 [connection signal="timeout" from="Timer" to="EnemyPath" method="spawn_enemy"]
+[connection signal="stop_spawning_enemys" from="DifficultyManager" to="EnemyPath" method="_on_difficulty_manager_stop_spawning_enemys"]
