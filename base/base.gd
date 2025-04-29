@@ -17,7 +17,7 @@ extends Node3D
 
 func _ready() -> void:
 	current_health = max_health
-	Engine.time_scale = 10
+	Engine.time_scale = 5
 
 func take_damage() -> void:
 	current_health -= 1
