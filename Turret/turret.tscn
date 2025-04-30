@@ -1,23 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://255k6r0h230e"]
+[gd_scene load_steps=8 format=3 uid="uid://255k6r0h230e"]
 
 [ext_resource type="Script" uid="uid://dirmjfw63jyq5" path="res://Turret/turret.gd" id="1_5kpma"]
 [ext_resource type="PackedScene" uid="uid://ces40m7v52s8" path="res://Turret/projectile.tscn" id="2_djkev"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_cb20n"]
-height = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_5kpma"]
-top_radius = 0.6
-bottom_radius = 0.6
-height = 0.7
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_djkev"]
-top_radius = 0.2
-bottom_radius = 0.2
-height = 0.6
-
-[sub_resource type="BoxMesh" id="BoxMesh_ttsi1"]
-size = Vector3(0.3, 0.3, 1)
+[ext_resource type="PackedScene" uid="uid://b4h803ufgwpkm" path="res://assets/Cannon.glb" id="3_r754r"]
+[ext_resource type="PackedScene" uid="uid://b1i4i6mmn3ids" path="res://assets/TurretBase.glb" id="4_2avlq"]
 
 [sub_resource type="Animation" id="Animation_ttsi1"]
 length = 0.001
@@ -60,28 +46,14 @@ _data = {
 script = ExtResource("1_5kpma")
 projectile = ExtResource("2_djkev")
 
-[node name="TurretBase" type="MeshInstance3D" parent="."]
+[node name="TurretBase" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CylinderMesh_cb20n")
 
-[node name="TurretTop" type="MeshInstance3D" parent="TurretBase"]
+[node name="TurretTop" type="Node3D" parent="TurretBase"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = SubResource("CylinderMesh_5kpma")
 
-[node name="BarrelMiddle" type="MeshInstance3D" parent="TurretBase/TurretTop"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.055906, 0.80756)
-mesh = SubResource("CylinderMesh_djkev")
-skeleton = NodePath("../..")
-
-[node name="BarrelRight" type="MeshInstance3D" parent="TurretBase/TurretTop/BarrelMiddle"]
-transform = Transform3D(0.990268, 0, -0.139173, 0.139173, -4.37114e-08, 0.990268, -6.08345e-09, -1, -4.3286e-08, 0.2, -0.20756, 0.00205231)
-mesh = SubResource("BoxMesh_ttsi1")
-skeleton = NodePath("../../..")
-
-[node name="BarrelLeft" type="MeshInstance3D" parent="TurretBase/TurretTop/BarrelMiddle"]
-transform = Transform3D(0.990268, 0, 0.139173, -0.139173, -4.37114e-08, 0.990268, 6.08345e-09, -1, -4.3286e-08, -0.2, -0.20756, 0.00205231)
-mesh = SubResource("BoxMesh_ttsi1")
-skeleton = NodePath("../../..")
+[node name="Cannon" parent="TurretBase/TurretTop" instance=ExtResource("3_r754r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -90,5 +62,7 @@ autostart = true
 libraries = {
 &"": SubResource("AnimationLibrary_r754r")
 }
+
+[node name="TurretBase2" parent="." instance=ExtResource("4_2avlq")]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
